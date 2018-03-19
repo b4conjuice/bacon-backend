@@ -4,11 +4,10 @@
   "description": "backend for bacon",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node",
-    "startheroku": "heroku local",
-    "startold": "node index.js",
-    "deploy": "git push heroku master",
-    "launch": "heroku open"
+    "dev": "nodemon index.js --exec babel-node",
+    "heroku-postbuild": "npm install",
+    "start": "babel-node index.js",
+    "deploy": "git push heroku master"
   },
   "author": "daniel lopez",
   "license": "ISC",
