@@ -1,12 +1,18 @@
 import express from "express";
 import request from "request";
 import SmashCalTournament from "./models/smash-cal-tournament";
+import SmashGGTournament from "./models/tournament";
 
 const tournaments = express.Router();
 
 tournaments.route("/").get((req, res) => {
-  res.json({
-    tournaments: true
+  SmashGGTournament.find(function(err, tournaments) {
+    if (err) res.send(err);
+    res.json(
+      tournaments.sort(function(a, b) {
+        return a.date - b.date;
+      })
+    );
   });
 });
 
@@ -30,6 +36,13 @@ tournaments
       );
     });
   });
+
+tournaments.route("/slug/:slug").get((req, res) => {
+  SmashGGTournament.findOne({ slug: req.params.slug }, (err, tournament) => {
+    if (err) res.send(err);
+    res.json(tournament);
+  });
+});
 
 tournaments.route("/smashgg/:slug").get((req, res) => {
   const tournament = req.params.slug;
