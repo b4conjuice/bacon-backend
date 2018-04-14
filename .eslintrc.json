@@ -96,7 +96,8 @@
           "invalidHref"
         ]
       }
-    ]
+    ],
+    "array-callback-return": "off"
   },
   "plugins": [
     "eslint-plugin-html",

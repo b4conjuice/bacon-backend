@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const SmashCalTournamentSchema = new Schema({
   name: String,
@@ -16,7 +16,7 @@ const SmashCalTournamentSchema = new Schema({
   meleeText: String,
   melee: Boolean,
   wiiuText: String,
-  wiiu: Boolean
+  wiiu: Boolean,
 });
 
-export default mongoose.model("SmashCalTournament", SmashCalTournamentSchema);
+export default mongoose.model('SmashCalTournament', SmashCalTournamentSchema);
