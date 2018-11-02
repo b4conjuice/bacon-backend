@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const TournamentSchema = new Schema({
   name: String,
@@ -13,17 +13,17 @@ const TournamentSchema = new Schema({
       gamerTag: String,
       prefix: String,
       rank: Number,
-      score: Number
-    }
+      score: Number,
+    },
   ],
   topPlayers: [
     {
       gamerTag: String,
       prefix: String,
       rank: Number,
-      score: Number
-    }
-  ]
+      score: Number,
+    },
+  ],
 });
 
-export default mongoose.model("Tournament", TournamentSchema);
+export default mongoose.model('Tournament', TournamentSchema);
