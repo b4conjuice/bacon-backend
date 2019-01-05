@@ -63,7 +63,7 @@ alba
     );
   })
 
-  // update note with new info
+  // update
   .put((req, res) => {
     const date = moment();
     const query = {
@@ -84,7 +84,7 @@ alba
         },
       },
     };
-    console.log(update);
+
     Territory.findOneAndUpdate(
       query,
       update,
@@ -103,22 +103,54 @@ alba
         });
       }
     );
-  })
-
-  // delete
-  .delete((req, res) => {
-    Territory.remove(
-      {
-        _id: req.params.id,
-      },
-      err => {
-        if (err) res.send(err);
-
-        res.json({
-          message: 'successfully deleted',
-        });
-      }
-    );
   });
+
+// delete
+// .delete((req, res) => {
+//   Territory.remove(
+//     {
+//       _id: req.params.id,
+//     },
+//     err => {
+//       if (err) res.send(err);
+
+//       res.json({
+//         message: 'successfully deleted',
+//       });
+//     }
+//   );
+// });
+
+alba.route('/:id/:number/:assignmentid').delete((req, res) => {
+  const query = {
+    id: req.params.id,
+    number: req.params.number,
+  };
+  const update = {
+    $pull: {
+      assignments: {
+        _id: req.params.assignmentid,
+      },
+    },
+  };
+  Territory.findOneAndUpdate(
+    query,
+    update,
+    {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    },
+    (err, territory) => {
+      if (err) res.send(err);
+
+      const { assignments } = territory;
+      res.json({
+        assignments,
+        message: 'territory updated',
+      });
+    }
+  );
+});
 
 module.exports = alba;
