@@ -1,5 +1,5 @@
-import express from 'express';
-import Note from './models/note';
+const express = require('express');
+const Note = require('./models/note');
 
 const notes = express.Router();
 
@@ -74,4 +74,4 @@ notes
     );
   });
 
-export default notes;
+module.exports = notes;

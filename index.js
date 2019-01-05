@@ -1,8 +1,8 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import tournaments from './tournaments';
-import notes from './notes';
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const tournaments = require('./tournaments');
+const notes = require('./notes');
 
 const app = express();
 const port = process.env.PORT || 5000;

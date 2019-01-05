@@ -1,9 +1,9 @@
-import express from 'express';
-import request from 'request';
-import moment from 'moment';
-import cheerio from 'cheerio';
-import SmashCalTournament from './models/smash-cal-tournament';
-import SmashGGTournament from './models/tournament';
+const express = require('express');
+const request = require('request');
+const moment = require('moment');
+const cheerio = require('cheerio');
+const SmashCalTournament = require('./models/smash-cal-tournament');
+const SmashGGTournament = require('./models/tournament');
 
 const tournaments = express.Router();
 
@@ -154,4 +154,4 @@ tournaments.route('/smashgg/:slug').get((req, res) => {
   });
 });
 
-export default tournaments;
+module.exports = tournaments;

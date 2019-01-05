@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
 
-const TournamentSchema = new Schema({
+const TournamentSchema = new mongoose.Schema({
   name: String,
   slug: String,
   date: Date,
@@ -26,4 +26,4 @@ const TournamentSchema = new Schema({
   ],
 });
 
-export default mongoose.model('Tournament', TournamentSchema);
+module.exports = mongoose.model('Tournament', TournamentSchema);

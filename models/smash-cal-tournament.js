@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
 
-const SmashCalTournamentSchema = new Schema({
+const SmashCalTournamentSchema = new mongoose.Schema({
   name: String,
   startDate: Date,
   startDateFormatted: String,
@@ -19,4 +19,4 @@ const SmashCalTournamentSchema = new Schema({
   wiiu: Boolean,
 });
 
-export default mongoose.model('SmashCalTournament', SmashCalTournamentSchema);
+module.exports = mongoose.model('SmashCalTournament', SmashCalTournamentSchema);
