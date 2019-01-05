@@ -50,40 +50,56 @@ alba
       },
       (err, territory) => {
         if (err) res.send(err);
-        const { assignments } = territory;
-        if (req.query.q === 'latest') {
-          const latest = assignments[0];
-          res.json({ assignments: [latest] });
-        } else res.json({ assignments });
+        if (territory) {
+          const { assignments } = territory || [];
+          if (req.query.q === 'latest') {
+            const latest = assignments[0];
+            res.json({ assignments: [latest] });
+          } else res.json({ assignments });
+        } else {
+          res.json({ assignments: [] });
+        }
       }
     );
   })
 
   // update note with new info
   .put((req, res) => {
-    Territory.findOne(
+    const date = moment();
+    const query = {
+      id: req.params.id,
+      number: req.params.number,
+    };
+    const update = {
+      $push: {
+        assignments: {
+          $each: [
+            {
+              dateUgly: date,
+              date: date.format('ddd MMM DD, YYYY'),
+              ...req.body.assignments,
+            },
+          ],
+          $position: 0,
+        },
+      },
+    };
+    console.log(update);
+    Territory.findOneAndUpdate(
+      query,
+      update,
       {
-        id: req.params.id,
-        number: req.params.number,
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
       },
       (err, territory) => {
         if (err) res.send(err);
 
-        const date = moment();
-        territory.assignments.unshift({
-          dateUgly: date,
-          date: date.format('ddd MMM DD, YYYY'),
-          ...req.body.assignments,
-        });
-
-        territory.save((err, updatedTerritory) => {
-          if (err) res.send(err);
-
-          const { assignments } = updatedTerritory;
-          res.json({
-            assignments,
-            message: 'territory updated',
-          });
+        const { assignments } = territory;
+        res.json({
+          assignments,
+          message: 'territory updated',
         });
       }
     );
