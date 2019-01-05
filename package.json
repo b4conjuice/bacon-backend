@@ -11,6 +11,9 @@
   },
   "author": "daniel lopez",
   "license": "ISC",
+  "now": {
+    "alias": "bacon"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",

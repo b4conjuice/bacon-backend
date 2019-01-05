@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const tournaments = require('./tournaments');
 const notes = require('./notes');
+const alba = require('./alba');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -36,5 +37,6 @@ app.route('/').get((req, res) => {
 
 app.use('/tournaments', tournaments);
 app.use('/notes', notes);
+app.use('/alba', alba);
 
 app.listen(port, () => console.log(`bacon on port http://localhost:${port}`));
