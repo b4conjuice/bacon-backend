@@ -9,8 +9,7 @@ const puppeteer = require('./puppeteer');
 
 const app = express();
 const port = process.env.PORT || 5000;
-const mongoDB = 'mongodb://admin:admin@ds019856.mlab.com:19856/niello';
-// const mongoDB = 'mongodb://admin:admin@ds213199.mlab.com:13199/dev';
+const mongoDB = process.env.DB_URL;
 const db = mongoose.connection;
 
 app.use((req, res, next) => {
