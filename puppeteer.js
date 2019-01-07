@@ -18,8 +18,8 @@ puppeteer.route('/').get((req, res) => {
 puppeteer.route('/assign').post((req, res) => {
   const { territory, user } = req.body;
   assign({
-    territory, // : '355610', // 'Bell 01'
-    user, // : '70405', // daniel
+    territory,
+    user,
   }).then(response => {
     res.json({
       type: 'assign',
@@ -31,7 +31,7 @@ puppeteer.route('/assign').post((req, res) => {
 puppeteer.route('/unassign').post((req, res) => {
   const { territory } = req.body;
   unassign({
-    territory, // : '355610', // 'Bell 01'
+    territory,
   }).then(response => {
     res.json({
       type: 'unassign',
@@ -43,8 +43,8 @@ puppeteer.route('/unassign').post((req, res) => {
 puppeteer.route('/reassign').post((req, res) => {
   const { territory, user } = req.body;
   reassign({
-    territory, // : '355610', // 'Bell 01'
-    user, // : '70405', // daniel
+    territory,
+    user,
   }).then(response => {
     res.json({
       type: 'reassign',
