@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config({ path: './variables.env' });
 const bodyParser = require('body-parser');
 const tournaments = require('./tournaments');
 const notes = require('./notes');
 const alba = require('./alba');
+const puppeteer = require('./puppeteer');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,11 +34,13 @@ app.route('/').get((req, res) => {
   res.json({
     success: true,
     message: `welcome to bacon's backend`,
+    test: process.env.BACON,
   });
 });
 
 app.use('/tournaments', tournaments);
 app.use('/notes', notes);
 app.use('/alba', alba);
+app.use('/puppeteer', puppeteer);
 
 app.listen(port, () => console.log(`bacon on port http://localhost:${port}`));
