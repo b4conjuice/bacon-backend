@@ -7,7 +7,7 @@
     "start": "nodemon -e js -x babel-node index.js",
     "dev": "nodemon -e js -x node index.js",
     "heroku-postbuild": "npm install",
-    "deploy": "git push heroku master"
+    "deploy": "now && now alias"
   },
   "author": "daniel lopez",
   "license": "ISC",
