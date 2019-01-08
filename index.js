@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const favicon = require('express-favicon');
+const path = require('path');
+
 const tournaments = require('./tournaments');
 const notes = require('./notes');
 const alba = require('./alba');
@@ -27,6 +30,8 @@ app.use(
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(favicon(path.join(__dirname, 'favicon.png')));
 
 app.route('/').get((req, res) => {
   res.json({
