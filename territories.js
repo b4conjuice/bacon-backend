@@ -153,4 +153,33 @@ territories.route('/:id/:number/:assignmentid').delete((req, res) => {
   );
 });
 
+territories.route('/assignments').get((req, res) => {
+  Territory.find((err, allTerritories) => {
+    if (err) res.send(err);
+    const assignments = allTerritories.reduce((allAssignments, territory) => {
+      territory.assignments.forEach(assignment =>
+        allAssignments.push({
+          dateUgly: assignment.dateUgly,
+          date: assignment.date,
+          dateShort: moment(assignment.date).format('M/D/YY'),
+          name: assignment.name,
+          out: assignment.out,
+          id: territory.id,
+          number: territory.number,
+        })
+      );
+      return allAssignments;
+    }, []);
+    assignments.sort((b, a) => {
+      if (b.dateUgly > a.dateUgly) return -1;
+      if (b.dateUgly < a.dateUgly) return 1;
+      return 0;
+    });
+    res.json({
+      assignments,
+      message: 'assignments',
+    });
+  });
+});
+
 module.exports = territories;
