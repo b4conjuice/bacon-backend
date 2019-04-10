@@ -121,37 +121,55 @@ territories
 //   );
 // });
 
-territories.route('/:id/:number/:assignmentid').delete((req, res) => {
-  const query = {
-    id: req.params.id,
-    number: req.params.number,
-  };
-  const update = {
-    $pull: {
-      assignments: {
-        _id: req.params.assignmentid,
-      },
-    },
-  };
-  Territory.findOneAndUpdate(
-    query,
-    update,
-    {
-      new: true,
-      upsert: true,
-      setDefaultsOnInsert: true,
-    },
-    (err, territory) => {
+territories
+  .route('/:id/:number/:assignmentid')
+  .get((req, res) => {
+    const query = {
+      id: req.params.id,
+      number: req.params.number,
+      'assignments._id': req.params.assignmentid,
+    };
+    Territory.findOne(query, { 'assignments.$': 1 }, (err, territory) => {
       if (err) res.send(err);
-
+      if (!territory) res.json({ message: 'assignment not found' });
       const { assignments } = territory;
       res.json({
         assignments,
-        message: 'territory updated',
+        message: 'get assignment',
       });
-    }
-  );
-});
+    });
+  })
+  .delete((req, res) => {
+    const query = {
+      id: req.params.id,
+      number: req.params.number,
+    };
+    const update = {
+      $pull: {
+        assignments: {
+          _id: req.params.assignmentid,
+        },
+      },
+    };
+    Territory.findOneAndUpdate(
+      query,
+      update,
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
+      },
+      (err, territory) => {
+        if (err) res.send(err);
+
+        const { assignments } = territory;
+        res.json({
+          assignments,
+          message: 'territory updated',
+        });
+      }
+    );
+  });
 
 territories.route('/assignments').get((req, res) => {
   Territory.find((err, allTerritories) => {
@@ -159,6 +177,7 @@ territories.route('/assignments').get((req, res) => {
     const assignments = allTerritories.reduce((allAssignments, territory) => {
       territory.assignments.forEach(assignment =>
         allAssignments.push({
+          assignmentId: assignment._id,
           dateUgly: assignment.dateUgly,
           date: assignment.date,
           dateShort: moment(assignment.date).format('M/D/YY'),
